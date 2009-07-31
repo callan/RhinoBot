@@ -146,7 +146,7 @@ public final class Rhino
 	/**
 	 * Whether or not Rhino is enabled
 	 */
-	private static boolean						rhinoEnabled = false;
+	private static boolean						rhinoEnabled = true;
 
 	/**
 	 * Prevents class from being instantiated (well, in a way)
