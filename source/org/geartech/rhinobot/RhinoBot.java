@@ -41,17 +41,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.geartech.rhinobot.drivers.socket.SocketDriver;
-import org.geartech.rhinobot.drivers.socket.StandardSocket;
-import org.geartech.rhinobot.manager.Channel;
-import org.geartech.rhinobot.manager.Manager;
-import org.geartech.rhinobot.manager.Mode;
-import org.geartech.rhinobot.manager.User;
+import org.geartech.rhinobot.drivers.socket.*;
+import org.geartech.rhinobot.manager.*;
 import org.geartech.rhinobot.rhino.Rhino;
-import org.geartech.rhinobot.support.BotEvent;
-import org.geartech.rhinobot.support.BotException;
-import org.geartech.rhinobot.support.Logger;
-import org.geartech.rhinobot.support.StringUtils;
+import org.geartech.rhinobot.support.*;
 import org.geartech.rhinobot.support.Logger.LogLevel;
 
 
@@ -91,18 +84,25 @@ public final class RhinoBot
 			}
 			catch (Exception e)
 			{
-				if (e.getMessage().equalsIgnoreCase("connection reset"))
-				{
-					logger.write(LogLevel.MINOR, "Connection was reset... Reconnecting");
-					reconnect = true;
-				}
-				else if (e.getMessage().equalsIgnoreCase("socket closed"))
-				{
-					logger.write(LogLevel.MINOR, "Socket was closed unexpectedly");
+				if (e != null && e.getMessage() != null)
+				{				
+					if (e.getMessage().equalsIgnoreCase("connection reset"))
+					{
+						logger.write(LogLevel.MINOR, "Connection was reset... Reconnecting");
+						reconnect = true;
+					}
+					else if (e.getMessage().equalsIgnoreCase("socket closed"))
+					{
+						logger.write(LogLevel.MINOR, "Socket was closed unexpectedly");
+					}
+					else
+					{
+						logger.write(LogLevel.MAJOR, "IOException occurred in handleData: " + e.getMessage(), e);
+					}
 				}
 				else
 				{
-					logger.write(LogLevel.MAJOR, "IOException occurred in handleData: " + e.getMessage(), e);
+					logger.write(LogLevel.MAJOR, "Exception occurred in handleData: " + e.toString(), e);
 				}
 				
 				disconnect();
@@ -237,7 +237,7 @@ public final class RhinoBot
 
 	public RhinoBot ()
 	{
-		this("ChatSpike", "RhinoBot", "RBot", "irc.chatspike.net", 6667, "StandardSocket", new ArrayList<String>(), null);
+		this("ChatSpike", "RhinoBot", "RBot", "example.com", 6667, "StandardSocket", new ArrayList<String>(), null);
 	}
 	
 	public RhinoBot (final String network, final String wantedNick, final String ident, 
@@ -245,7 +245,7 @@ public final class RhinoBot
 				final ArrayList<String> channelsToJoin, final String password)
 	{
 		believedNetwork		= network;
-		this.charset		= "UTF-8";
+		this.charset		= "UTF8";
 		this.actualNick		= wantedNick; 
 		this.wantedNick		= wantedNick;
 		this.ident			= ident;
@@ -354,10 +354,10 @@ public final class RhinoBot
 	
 		// TODO Fix
 //		connectionSocket = ModuleController.findSocketModule(wantedSocket);
-		
+
 		if (connectionSocket == null)
 		{
-			logger.write(LogLevel.MINOR, "ModuleController was unable to find socket " + wantedSocket + ", defaulted to BotNormalSocket");
+			logger.write(LogLevel.MINOR, "ModuleController was unable to find socket " + wantedSocket + ", defaulted to StandardSocket");
 			connectionSocket = new StandardSocket();
 		}
 		
