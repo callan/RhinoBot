@@ -123,9 +123,9 @@ public class SecureSocket implements SocketDriver
 	public void open (String address, int port, String charset) throws Exception
 	{
 		String certFile = "rhinobot.crt";
-		String certPass = "";
-		String certPass2 = "";
-		String sslMode  = "";
+		String certPass = "serverkspw";
+		String certPass2 = "serverpw";
+		String sslMode  = "TLS";
 		
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 		
