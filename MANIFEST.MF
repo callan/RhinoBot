@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Ant-Version: Apache Ant 1.6.5
-Created-By: 1.5.0_06-b05 (Sun Microsystems Inc.)
+Created-By: 1.6.0 (Sun Microsystems Inc.)
 Main-Class: org.kernel.Kernel
-Class-Path: lib/js.jar lib/mysql.jar lib/gnu-crypto.jar lib/javax-crypto.jar lib/javax-security.jar
+Class-Path: lib/js.jar lib/mysql.jar
 Bundle-Name: RhinoBot
 
