@@ -9,25 +9,18 @@
 <project name="RhinoBot" default="dist" basedir=".">
   <description>RhinoBot JAR Compiler!</description>
   <property name="backup" location="backup" />
-  <property name="rhinosrc" location="trunk/org/rhinobot" />
-  <property name="kernelsrc" location="G:/Eclipse/Kernel/src/org/kernel" />
-  <property name="src" location="src" />
+  <property name="rhinosrc" location="source/org/geartech/rhinobot" />
+  <property name="src" location="source" />
   <property name="build" location="build" />
   <property name="dist" location="." />
-  <property name="includes" location="include" />
+  <property name="lib" location="lib" />
   <!--
   Name: compile
   Depends on: init
   Description: Compiles the source
   -->
   <target name="compile" description="Compiles the source">
-	<javac srcdir="${kernelsrc}"
-      	   destdir="${build}"
-      	   encoding="utf-8"
-    	   debug="yes"
-  		   debuglevel="source"/>
-    
-    <javac srcdir="${rhinosrc}"
+	<javac srcdir="${rhinosrc}" classpath="${lib}/js.jar"
       	   destdir="${build}"
       	   encoding="utf-8"
     	   debug="yes"
@@ -38,16 +31,18 @@
   Depends on: compile
   Description: Generate the distrobution jar
   -->
-  <target name="dist" depends="compile" description="Generate the Distrobution">
+  <target name="dist" depends="compile" description="Generate the Distribution">
     <jar jarfile="${dist}/${ant.project.name}.jar"
          basedir="${build}"
          manifest="MANIFEST.MF" />
     
-    <!-- <jar basedir="${build}" jarfile="${dist}/${ant.project.name}.jar"
+    <!--
+    <jar basedir="${build}" jarfile="${dist}/${ant.project.name}.jar"
     	 compress="true" manifest="${mfdir}/MANIFEST.MF">
     	<fileset dir="src">
-    	  <include name="${src}/*" id="src" />
+    	  <include name="${src}/*" id="source" />
     	</fileset>
-    </jar> -->
+    </jar>
+    -->
   </target>
 </project>
