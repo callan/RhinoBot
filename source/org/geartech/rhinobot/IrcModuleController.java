@@ -122,7 +122,7 @@ public final class IrcModuleController
 		
 		logger.write(LogLevel.VERBOSE, "Loading Module " + moduleName);
 		
-		Class classModule = null;
+		Class<IrcModule> classModule = null;
 		
 		try
 		{
@@ -139,7 +139,7 @@ public final class IrcModuleController
 		}
 		
 //		if (ModuleController.hasInterface(classModule, "org.rhinobot.bot.irc.BotIrcModule"))
-		if (false)
+		if (classModule != null)
 		{
 			IrcModule module = null;
 			

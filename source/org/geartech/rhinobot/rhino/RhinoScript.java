@@ -43,6 +43,11 @@ import org.mozilla.javascript.Script;
 public class RhinoScript implements Serializable
 {
 	/**
+	 * Serial ID
+	 */
+	private static final long	serialVersionUID	= 1095893043973619026L;
+
+	/**
 	 * MD5 Hash
 	 */
 	private String md5hash;

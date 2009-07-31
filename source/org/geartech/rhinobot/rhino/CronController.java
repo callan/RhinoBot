@@ -48,10 +48,8 @@ public final class CronController
 	 */
 	public final class TimeAlreadyPassedException extends Exception
 	{
-		public TimeAlreadyPassedException ()
-		{
-			// Nothing!
-		}
+		private static final long	serialVersionUID	= 7979750705630666385L;
+		public TimeAlreadyPassedException () { }
 	}
 	
 	/**

@@ -46,7 +46,7 @@ public final class RhinoModuleController
 	/**
 	 * The synchronized variant of HashMap, as this does implement Map.
 	 */
-	private static final Hashtable<String, Class> modules = new Hashtable<String, Class>();
+	private static final Hashtable<String, Class<RhinoModule>> modules = new Hashtable<String, Class<RhinoModule>>();
 	
 	private RhinoModuleController ()
 	{
@@ -99,9 +99,9 @@ public final class RhinoModuleController
 	 * 
 	 * @param moduleName
 	 */
-	public static final synchronized Class loadModule (final String moduleName)
+	public static final synchronized Class<RhinoModule> loadModule (final String moduleName)
 	{
-		Class classModule = null;
+		Class<RhinoModule> classModule = null;
 		
 		try
 		{
@@ -137,12 +137,12 @@ public final class RhinoModuleController
 		return set.toArray(new String[set.size()]);
 	}
 	
-	public static final Class getModule (final String moduleName)
+	public static final Class<RhinoModule> getModule (final String moduleName)
 	{
 		return modules.get(moduleName);
 	}
 	
-	public static final Collection<Class> getModules ()
+	public static final Collection<Class<RhinoModule>> getModules ()
 	{
 		return modules.values();
 	}

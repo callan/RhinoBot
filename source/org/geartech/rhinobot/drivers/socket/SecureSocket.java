@@ -32,11 +32,70 @@
  */
 package org.geartech.rhinobot.drivers.socket;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+
+import java.security.KeyStore;
+import java.security.SecureRandom;
+import java.security.Security;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 /**
  * 
  */
 public class SecureSocket implements SocketDriver
 {
+	private final class MyTrustManager implements X509TrustManager
+	{
+		/**
+		 * @see javax.net.ssl.X509TrustManager#checkClientTrusted(java.security.cert.X509Certificate[],
+		 *      java.lang.String)
+		 */
+		public void checkClientTrusted (X509Certificate[] arg0, String arg1)
+		{
+			for (X509Certificate arg : arg0) 
+			{
+				try { arg.checkValidity(); }
+				catch (Exception e) { }
+			}
+		}
+
+		/**
+		 * @see javax.net.ssl.X509TrustManager#checkServerTrusted(java.security.cert.X509Certificate[],
+		 *      java.lang.String)
+		 */
+		public void checkServerTrusted (X509Certificate[] arg0, String arg1)
+		{
+			for (X509Certificate arg : arg0) 
+			{
+				try { arg.checkValidity(); }
+				catch (Exception e) { }
+			}
+		}
+
+		/**
+		 * @see javax.net.ssl.X509TrustManager#getAcceptedIssuers()
+		 */
+		public X509Certificate[] getAcceptedIssuers ()
+		{
+			return (new X509Certificate[0]);
+		}
+	}
+
+	private PrintWriter		writer;
+	private BufferedReader	reader;
+	private SSLSocket		socket;
+
 	
 	/* (non-Javadoc)
 	 * @see org.geartech.rhinobot.drivers.SocketDriver#close()
@@ -44,8 +103,8 @@ public class SecureSocket implements SocketDriver
 	@Override
 	public void close () throws Exception
 	{
-		// TODO Auto-generated method stub
-		
+		if (socket != null)
+			socket.close();
 	}
 	
 	/* (non-Javadoc)
@@ -54,8 +113,7 @@ public class SecureSocket implements SocketDriver
 	@Override
 	public boolean connected ()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return (socket != null && socket.isConnected());
 	}
 	
 	/* (non-Javadoc)
@@ -64,8 +122,58 @@ public class SecureSocket implements SocketDriver
 	@Override
 	public void open (String address, int port, String charset) throws Exception
 	{
-		// TODO Auto-generated method stub
+		String certFile = "rhinobot.crt";
+		String certPass = "";
+		String certPass2 = "";
+		String sslMode  = "";
 		
+		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+		
+		SSLContext			context = null;
+		SSLSocketFactory	factory = null;
+		KeyStore			store   = null;
+		KeyManagerFactory   manager = null;
+		
+		store   = KeyStore.getInstance("JKS");
+		manager = KeyManagerFactory.getInstance("SunX509");
+		
+		store.load(new FileInputStream(certFile), (certPass).toCharArray());
+		manager.init(store, (certPass2).toCharArray());
+		
+		context = SSLContext.getInstance(sslMode);
+		
+		context.init(manager.getKeyManagers(), new TrustManager[] { new MyTrustManager() }, new SecureRandom());
+		factory = context.getSocketFactory();
+
+		socket = (SSLSocket) factory.createSocket(address, port);
+		socket.setSoTimeout(0);
+		socket.setKeepAlive(true);
+		
+		String[] ciphers = new String[] {
+			"TLS_RSA_WITH_AES_128_CBC_SHA",
+			"TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
+			"TLS_DHE_DSS_WITH_AES_128_CBC_SHA",
+			"SSL_RSA_WITH_RC4_128_MD5",
+			"SSL_RSA_WITH_RC4_128_SHA",
+			"SSL_RSA_WITH_3DES_EDE_CBC_SHA",
+			"SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA",
+			"SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA",
+			"SSL_RSA_WITH_DES_CBC_SHA",
+			"SSL_DHE_RSA_WITH_DES_CBC_SHA",
+			"SSL_DHE_DSS_WITH_DES_CBC_SHA",
+			"SSL_RSA_EXPORT_WITH_RC4_40_MD5",
+			"SSL_RSA_EXPORT_WITH_DES40_CBC_SHA",
+			"SSL_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA",
+			"SSL_DHE_DSS_EXPORT_WITH_DES40_CBC_SHA"
+		};
+
+		socket.setEnabledCipherSuites(ciphers);
+		socket.setWantClientAuth(true);
+		socket.setEnableSessionCreation(true);
+		socket.startHandshake();
+		
+		 reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), charset));
+		 writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), charset), true);
 	}
 	
 	/* (non-Javadoc)
@@ -74,8 +182,10 @@ public class SecureSocket implements SocketDriver
 	@Override
 	public String readLine () throws Exception
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (!connected())
+			return null;
+		
+		return reader.readLine();
 	}
 	
 	/* (non-Javadoc)
@@ -84,8 +194,9 @@ public class SecureSocket implements SocketDriver
 	@Override
 	public void writeLine (String line)
 	{
-		// TODO Auto-generated method stub
+		if (!connected())
+			return;
 		
+		writer.println(line);
 	}
-	
 }

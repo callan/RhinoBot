@@ -30,78 +30,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.geartech.rhinobot.drivers.socket;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.Socket;
+package org.geartech.rhinobot.rhino;
 
 /**
  * 
  */
-public class StandardSocket implements SocketDriver
-{
-	private Socket socket;
-	private BufferedReader reader;
-	private PrintWriter writer;
-	
-	/* (non-Javadoc)
-	 * @see org.geartech.rhinobot.drivers.SocketDriver#close()
-	 */
-	@Override
-	public void close () throws Exception
-	{
-		if (socket != null)
-			socket.close();
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.geartech.rhinobot.drivers.SocketDriver#connected()
-	 */
-	@Override
-	public boolean connected ()
-	{
-		return (socket != null && socket.isConnected());
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.geartech.rhinobot.drivers.SocketDriver#open(java.lang.String, int, java.lang.String)
-	 */
-	@Override
-	public void open (String address, int port, String charset) throws Exception
-	{
-		socket = new Socket(address, port);
-		socket.setSoTimeout(0);
-		socket.setKeepAlive(true);
-		
-		reader = new BufferedReader( new InputStreamReader(socket.getInputStream(), charset) );
-		writer = new PrintWriter( new OutputStreamWriter(socket.getOutputStream(), charset), true );
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.geartech.rhinobot.drivers.SocketDriver#readLine()
-	 */
-	@Override
-	public String readLine () throws Exception
-	{
-		if (!connected())
-			return null;
+public interface RhinoModule
+{	
 
-		return reader.readLine();
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.geartech.rhinobot.drivers.SocketDriver#writeLine(java.lang.String)
-	 */
-	@Override
-	public void writeLine (String line)
-	{
-		if (!connected())
-			return;
-		
-		writer.println(line);
-	}
-	
 }

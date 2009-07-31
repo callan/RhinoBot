@@ -41,6 +41,11 @@ package org.geartech.rhinobot.rhino;
 public final class CronScript extends RhinoScript
 {
 	/**
+	 * Serial ID
+	 */
+	private static final long	serialVersionUID	= 4930556549116004841L;
+
+	/**
 	 * Time to start
 	 */
 	private long 	time;

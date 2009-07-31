@@ -41,7 +41,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -256,7 +255,7 @@ public final class Rhino
 		{
 //			RhinoModuleController.loadModules(reader.getList("rhinobot>rhino-modules"));
 			
-			for (Class module : RhinoModuleController.getModules())
+			for (Class<RhinoModule> module : RhinoModuleController.getModules())
 			{
 				try
 				{
@@ -288,7 +287,7 @@ public final class Rhino
 	 */
 	public synchronized final void loadModule (final String moduleName) throws Exception
 	{
-		Class module = RhinoModuleController.loadModule(moduleName);
+		Class<RhinoModule> module = RhinoModuleController.loadModule(moduleName);
 		
 		if (module == null)
 		{

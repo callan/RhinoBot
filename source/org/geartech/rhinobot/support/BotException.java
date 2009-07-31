@@ -35,6 +35,11 @@ package org.geartech.rhinobot.support;
 
 public final class BotException extends Exception
 {
+	/**
+	 * Serial ID
+	 */
+	private static final long	serialVersionUID	= 863165627142590840L;
+
 	public BotException (final String detail)
 	{
 		super(detail);

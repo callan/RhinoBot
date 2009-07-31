@@ -235,13 +235,17 @@ public final class RhinoBot
 	 * Starting up and stuff
 	 */
 
-	public RhinoBot (final String charset, final String network, final String wantedNick, final String ident, 
-				final String wantedServer, final int port, final String wantedSocket, final boolean startup,
-				final ArrayList<String> channelsToJoin, final String password, final boolean enableRhino,
-				final int instanceNumber)
+	public RhinoBot ()
+	{
+		this("ChatSpike", "RhinoBot", "RBot", "irc.chatspike.net", 6667, "StandardSocket", new ArrayList<String>(), null);
+	}
+	
+	public RhinoBot (final String network, final String wantedNick, final String ident, 
+				final String wantedServer, final int port, final String wantedSocket, 
+				final ArrayList<String> channelsToJoin, final String password)
 	{
 		believedNetwork		= network;
-		this.charset		= charset;
+		this.charset		= "UTF-8";
 		this.actualNick		= wantedNick; 
 		this.wantedNick		= wantedNick;
 		this.ident			= ident;
@@ -249,11 +253,11 @@ public final class RhinoBot
 		this.wantedServer	= wantedServer;
 		this.port			= port;
 		this.wantedSocket	= wantedSocket;
-		this.startup		= startup;
+		this.startup		= true;
 		this.channelsToJoin = channelsToJoin;
 		this.password		= password;
-		this.instanceNumber = instanceNumber;
-		rhinoEnabled		= enableRhino;
+		this.instanceNumber = 0;
+		rhinoEnabled		= true;
 	}
 	
 	/**
