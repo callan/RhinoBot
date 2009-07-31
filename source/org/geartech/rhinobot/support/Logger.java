@@ -167,9 +167,9 @@ public final class Logger
 	private static boolean	logging			= true;
 	private static boolean	verbose			= true;
 	private boolean 		localVerbose	= verbose;
-	private static int		minLevel		= 10;
+	private static int		minLevel		= 0;
 
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	
 	/**
 	 * Logger Constructor. creates a timestamp, and
