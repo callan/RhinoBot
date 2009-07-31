@@ -4,6 +4,8 @@
 *.classpath
 *.project
 *.settings
+*.cjs
+*.crt
 build/*
 bin/*
 #ignore thumbnails created by windows
