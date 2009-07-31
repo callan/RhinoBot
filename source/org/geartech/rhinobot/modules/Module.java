@@ -32,17 +32,49 @@
  */
 package org.geartech.rhinobot.modules;
 
-import org.geartech.rhinobot.manager.Mask;
+import java.util.ArrayList;
+
+import org.geartech.rhinobot.RhinoBot;
+import org.geartech.rhinobot.manager.Channel;
+import org.geartech.rhinobot.manager.Mode;
+import org.geartech.rhinobot.manager.User;
 
 /**
  * 
  */
-public interface IrcModule
+public interface Module
 {
+	void onInit (RhinoBot bot);
+	
 	void onConnect (String network, String server, int port, String driver);
+	void onPostConnect ();
+
+	void onPreDisconnect ();
 	void onDisconnect ();
 	
-	void onQuit (String reason, Mask user);
-	void onJoin (String channel, Mask user);
-	void onPart (String channel, String reason, Mask user);
+	void onNumeric (int numeric, String[] data, User user);
+	
+	void onQuit (String reason, User user);
+	void onJoin (Channel channel, User user);
+	void onPart (Channel channel, String reason, User user);
+	void onKick (Channel channel, String reason, User user);
+	void onMode (Channel channel, ArrayList<Mode> modes, User user);
+	void onInvite (Channel channel, User user);
+	void onNick (String previousNick, User user);
+	
+	void onMessage (String message, User user);
+	void onMessage (String message, Channel channel, User user);
+
+	void onAction (String message, User user);
+	void onAction (String message, Channel channel, User user);
+
+	void onCTCP (String message, User user);
+	void onCTCP (String message, Channel channel, User user);
+	
+	void onNotice (String message, User user);
+	void onNotice (String message, Channel channel, User user);
+
+	void onWallops (String message, User user);
+	
+	void onRaw (String rawMessage, User user);
 }
