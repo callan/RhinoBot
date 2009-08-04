@@ -30,7 +30,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.geartech.rhinobot.rhino;
+package org.geartech.rhinobot.scripting;
+
+import org.geartech.rhinobot.scripting.javascript.Rhino;
+import org.geartech.rhinobot.scripting.javascript.RhinoScript;
 
 
 /**

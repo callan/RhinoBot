@@ -30,7 +30,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.geartech.rhinobot.rhino;
+package org.geartech.rhinobot.scripting.javascript;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -44,7 +44,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import org.geartech.rhinobot.support.BotEvent;
+import org.geartech.rhinobot.scripting.CronScript;
+import org.geartech.rhinobot.support.SupportedEvents;
 import org.geartech.rhinobot.support.Logger;
 import org.geartech.rhinobot.support.Logger.LogLevel;
 import org.mozilla.javascript.Context;
@@ -111,7 +112,7 @@ public final class Rhino
 	/**
 	 * All the scripts the controller uses.
 	 */
-	private final Hashtable<BotEvent, RhinoScript>	scripts					= new Hashtable<BotEvent, RhinoScript>();
+	private final Hashtable<SupportedEvents, RhinoScript>	scripts					= new Hashtable<SupportedEvents, RhinoScript>();
 
 	/**
 	 * Scripts Directory
@@ -255,7 +256,7 @@ public final class Rhino
 		{
 //			RhinoModuleController.loadModules(reader.getList("rhinobot>rhino-modules"));
 			
-			for (Class<RhinoModule> module : RhinoModuleController.getModules())
+			for (Class<RhinoModule> module : RhinoFactory.getModules())
 			{
 				try
 				{
@@ -287,7 +288,7 @@ public final class Rhino
 	 */
 	public synchronized final void loadModule (final String moduleName) throws Exception
 	{
-		Class<RhinoModule> module = RhinoModuleController.loadModule(moduleName);
+		Class<RhinoModule> module = RhinoFactory.loadModule(moduleName);
 		
 		if (module == null)
 		{
@@ -312,9 +313,9 @@ public final class Rhino
 	 */
 	public synchronized final void unloadModule (final String moduleName)
 	{
-		if (RhinoModuleController.getModule(moduleName) != null)
+		if (RhinoFactory.getModule(moduleName) != null)
 		{
-			RhinoModuleController.unloadModule(moduleName);
+			RhinoFactory.unloadModule(moduleName);
 			scope.delete(moduleName);
 		}
 	}
@@ -340,22 +341,11 @@ public final class Rhino
 	 * @param event
 	 * @param parameters
 	 */
-	public final synchronized void runScript (final BotEvent event, Object[] parameters, final Object[] basicInfo)
+	public final synchronized void runScript (final SupportedEvents event, Object[] parameters, final Object[] basicInfo)
 	{
-		if (event == BotEvent.cron)
-		{
-			return;
-		}
-		
 		if (parameters == null)
 		{
 			parameters = new Object[0];
-		}
-		
-		if (event.getParamCount() != parameters.length)
-		{
-			logger.write(LogLevel.INFO, "Event " + event.toString() + " failed parameter count check!");
-			return;
 		}
 		
 		getScript(event);
@@ -419,7 +409,7 @@ public final class Rhino
 	 * Runs a cron script
 	 * @param script
 	 */
-	final synchronized void runCronScript (final CronScript script)
+	public final synchronized void runCronScript (final CronScript script)
 	{
 		Context cx = getContext();
 		
@@ -459,8 +449,8 @@ public final class Rhino
 	{
 		logger.write(LogLevel.INFO, "Reloading Scripts...");
 		
-		Enumeration<BotEvent>	keys  = scripts.keys();
-		BotEvent				event = null;
+		Enumeration<SupportedEvents>	keys  = scripts.keys();
+		SupportedEvents				event = null;
 		
 		while (keys.hasMoreElements())
 		{
@@ -482,7 +472,7 @@ public final class Rhino
 	 * @param source
 	 * @return
 	 */
-	static final Script compileScript (final BotEvent event, final String source)
+	static final Script compileScript (final SupportedEvents event, final String source)
 	{
 		return compileScript(event.toString(), source);
 	}
@@ -492,7 +482,7 @@ public final class Rhino
 	 * @param source
 	 * @return
 	 */
-	static final Script compileScript (final String source)
+	public static final Script compileScript (final String source)
 	{
 		return compileScript("", source);
 	}
@@ -520,7 +510,7 @@ public final class Rhino
 	 * @param event
 	 * @return TRUE if the compiled script was loaded, or FALSE if it wasn't
 	 */
-	private final boolean loadCompiledScript (final BotEvent event)
+	private final boolean loadCompiledScript (final SupportedEvents event)
 	{
 		if (scripts.containsKey(event))
 			return true;
@@ -562,7 +552,7 @@ public final class Rhino
 	 * Saves a compiled script
 	 * @param event
 	 */
-	private final void saveCompiledScript (final BotEvent event)
+	private final void saveCompiledScript (final SupportedEvents event)
 	{
 		if (!scripts.containsKey(event))
 		{
@@ -629,7 +619,7 @@ public final class Rhino
 	 * 
 	 * @param event
 	 */
-	private final void getScript (final BotEvent event)
+	private final void getScript (final SupportedEvents event)
 	{
 		if (scripts.containsKey(event))
 		{

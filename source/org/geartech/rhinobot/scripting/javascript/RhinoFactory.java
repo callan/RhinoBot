@@ -30,7 +30,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.geartech.rhinobot.rhino;
+package org.geartech.rhinobot.scripting.javascript;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,14 +41,14 @@ import java.util.Set;
 /**
  * ModuleController for JavaScript libraries built in Java. For use with Rhino.
  */
-public final class RhinoModuleController
+public final class RhinoFactory
 {
 	/**
 	 * The synchronized variant of HashMap, as this does implement Map.
 	 */
 	private static final Hashtable<String, Class<RhinoModule>> modules = new Hashtable<String, Class<RhinoModule>>();
 	
-	private RhinoModuleController ()
+	private RhinoFactory ()
 	{
 		
 	}

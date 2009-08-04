@@ -32,54 +32,28 @@
  */
 package org.geartech.rhinobot.support;
 
-public enum BotEvent
+public enum SupportedEvents
 {
-	// Server Connection
-	onConnect(1),
-	onDisconnect(1),
-	onQuit(6),
-	
-	// Basic IRC events
-	onJoin(6),
-	onPart(7),
-	onMode(7),
-	onKick(8),
-	onNick(6),
-	onInvite(6),
-	
-	// IRC Message-type events
-	onMessage(7),
-	onAction(7),
-	onCTCP(8),
-	onNotice(7),
-	onWallops(6),
-	onVersion(4),
-	
-	cron(0);
-	
-	/**
-	 * Parameter Count
-	 */
-	private int    paramCount;
-	
-	/**
-	 * Basic constructor
-	 * @param eventName
-	 */
-	private BotEvent (final int paramCount)
-	{
-		this.paramCount = paramCount;
-	}
-	
-	/**
-	 * Gets the param count
-	 * @return
-	 */
-	public final int getParamCount ()
-	{
-		return paramCount;
-	}
-	
+	onAction,
+	onConnect,
+	onCTCP,
+	onDisconnect,
+	onInit,
+	onInvite,
+	onJoin,
+	onKick,
+	onMessage,
+	onMode,
+	onNick,
+	onNotice,
+	onNumeric,
+	onPart,
+	onPostConnect,
+	onPreDisconnect,
+	onQuit,
+	onRaw,
+	onWallops;
+
 	/**
 	 * Returns the name of the enum in string format
 	 * Overidden

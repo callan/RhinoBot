@@ -30,106 +30,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.geartech.rhinobot.rhino;
+package org.geartech.rhinobot.scripting.javascript;
 
-import java.io.Serializable;
-
-import org.mozilla.javascript.Script;
-
+import org.mozilla.javascript.Scriptable;
 
 /**
- * Each instance of this class represents a JavaScript source.
+ * 
  */
-public class RhinoScript implements Serializable
-{
-	/**
-	 * Serial ID
-	 */
-	private static final long	serialVersionUID	= 1095893043973619026L;
+public interface RhinoModule extends Scriptable
+{	
 
-	/**
-	 * MD5 Hash
-	 */
-	private String md5hash;
-	
-	/**
-	 * The source
-	 */
-	private String source;
-	
-	/**
-	 * The filename
-	 */
-	private String fileName;
-	
-	/**
-	 * The script compiled
-	 */
-	private Script script;
-	
-	/**
-	 * Constructor for auto-compiling a script
-	 * @param source
-	 * @param filename
-	 */
-	public RhinoScript (final String source, final String filename)
-	{
-		this(source, filename, Rhino.compileScript(filename, source));
-	}
-	
-	/**
-	 * Basic Constructor
-	 * @param source
-	 * @param filename
-	 */
-	public RhinoScript (final String source, final String filename, final Script script)
-	{
-		this.source = source;
-		this.script = script;
-		fileName    = filename;
-	}
-	
-	/**
-	 * Gets the source
-	 * @return the source
-	 */
-	public final String getSource ()
-	{
-		return source;
-	}
-	
-	/**
-	 * Gets the script
-	 * @return the script
-	 */
-	public final Script getScript ()
-	{
-		return script;
-	}
-	
-	/**
-	 * Gets the file name
-	 * @return the filename
-	 */
-	public final String getEventName ()
-	{
-		return fileName;
-	}
-	
-	/**
-	 * Calculates the MD5 Hash of this file
-	 */
-	public final void calcHash ()
-	{
-		// TODO fix this
-	}
-	
-	/**
-	 * Returns the MD5 hash of this file.
-	 * @return
-	 */
-	public final String getHash ()
-	{
-		return md5hash;
-	}
 }
