@@ -44,7 +44,7 @@ import org.geartech.rhinobot.manager.User;
  */
 public class BaseModule implements Module
 {
-	private RhinoBot bot;
+	protected RhinoBot bot;
 	
 	public void onInit (RhinoBot bot)
 	{

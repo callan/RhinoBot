@@ -43,7 +43,7 @@ import java.util.HashMap;
 
 import org.geartech.rhinobot.drivers.socket.*;
 import org.geartech.rhinobot.manager.*;
-import org.geartech.rhinobot.rhino.Rhino;
+import org.geartech.rhinobot.scripting.javascript.Rhino;
 import org.geartech.rhinobot.support.*;
 import org.geartech.rhinobot.support.Logger.LogLevel;
 
@@ -1986,7 +1986,7 @@ public final class RhinoBot
 				}
 				else if (command2.equals("version"))
 				{
-					onVersion(nick, ident, hostmask);
+					// TODO support onVersion?
 				}
 				else if (command2.equals("send"))
 				{
@@ -2208,7 +2208,7 @@ public final class RhinoBot
 	
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onConnect, new Object[] { this }, getBasicInfo());
+			rhino.runScript(SupportedEvents.onConnect, new Object[] { this }, getBasicInfo());
 		}
 	}
 	
@@ -2224,7 +2224,7 @@ public final class RhinoBot
 	
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onDisconnect, new Object[] { this }, getBasicInfo());
+			rhino.runScript(SupportedEvents.onDisconnect, new Object[] { this }, getBasicInfo());
 		}
 	}
 
@@ -2264,7 +2264,7 @@ public final class RhinoBot
 
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onQuit, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onQuit, parameters, getBasicInfo());
 		}
 	}
 	
@@ -2311,7 +2311,7 @@ public final class RhinoBot
 
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onJoin, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onJoin, parameters, getBasicInfo());
 		}
 	}
 
@@ -2351,7 +2351,7 @@ public final class RhinoBot
 	
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onPart, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onPart, parameters, getBasicInfo());
 		}
 	}
 
@@ -2394,7 +2394,7 @@ public final class RhinoBot
 	
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onKick, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onKick, parameters, getBasicInfo());
 		}
 	}
 
@@ -2440,7 +2440,7 @@ public final class RhinoBot
 	
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onMode, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onMode, parameters, getBasicInfo());
 		}
 	}
 
@@ -2487,7 +2487,7 @@ public final class RhinoBot
 
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onInvite, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onInvite, parameters, getBasicInfo());
 		}
 	}
 
@@ -2527,7 +2527,7 @@ public final class RhinoBot
 	
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onNick, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onNick, parameters, getBasicInfo());
 		}
 	}
 	
@@ -2577,7 +2577,7 @@ public final class RhinoBot
 	
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onMessage, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onMessage, parameters, getBasicInfo());
 		}
 	}
 	
@@ -2627,7 +2627,7 @@ public final class RhinoBot
 	
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onAction, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onAction, parameters, getBasicInfo());
 		}
 	}
 
@@ -2675,7 +2675,7 @@ public final class RhinoBot
 	
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onNotice, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onNotice, parameters, getBasicInfo());
 		}
 	}
 
@@ -2716,7 +2716,7 @@ public final class RhinoBot
 	
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onWallops, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onWallops, parameters, getBasicInfo());
 		}
 	}
 
@@ -2760,27 +2760,7 @@ public final class RhinoBot
 		
 		if (rhinoEnabled)
 		{
-			rhino.runScript(BotEvent.onCTCP, parameters, getBasicInfo());
-		}
-	}
-	
-	/**
-	 * @param nick
-	 * @param ident2
-	 * @param hostmask
-	 */
-	private final void onVersion (String nick, String ident, String hostmask)
-	{
-		final Object[] parameters = new Object[] { nick, ident, hostmask, this };
-		
-		if (modulesEnabled)
-		{
-			IrcModuleController.onVersion(nick, ident, hostmask, this);
-		}
-
-		if (rhinoEnabled)
-		{
-			rhino.runScript(BotEvent.onVersion, parameters, getBasicInfo());
+			rhino.runScript(SupportedEvents.onCTCP, parameters, getBasicInfo());
 		}
 	}
 }
