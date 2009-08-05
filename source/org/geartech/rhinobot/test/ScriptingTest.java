@@ -32,8 +32,6 @@
  */
 package org.geartech.rhinobot.test;
 
-import org.geartech.rhinobot.scripting.*;
-
 /**
  * 
  */
