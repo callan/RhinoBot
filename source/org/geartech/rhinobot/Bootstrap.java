@@ -35,7 +35,7 @@ package org.geartech.rhinobot;
 /**
  * 
  */
-public class Main
+public class Bootstrap
 {
 	
 	/**
