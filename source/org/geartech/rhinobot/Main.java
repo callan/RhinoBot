@@ -43,8 +43,9 @@ public class Main
 	 */
 	public static void main (String[] args)
 	{
-		RhinoBot bot = new RhinoBot();
-		bot.start();
+		System.out.println("Stay Tuned");
+//		RhinoBot bot = new RhinoBot();
+//		bot.start();
 	}
 	
 }
