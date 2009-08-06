@@ -32,30 +32,52 @@
  */
 package org.geartech.rhinobot;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * 
- */
-public class Config
-{	
-	private HashMap<String, String> _config = new HashMap<String, String>(30);
+import org.geartech.rhinobot.drivers.socket.*;
+import org.geartech.rhinobot.manager.*;
+import org.geartech.rhinobot.scripting.*;
+import org.geartech.rhinobot.support.*;
+import org.geartech.rhinobot.support.Logger.LogLevel;
 
-	public Config ()
-	{}
+
+public class Core
+{
+	protected String  _network  = "ChatSpike",
+					  _nick     = "RhinoBot",
+					  _ident    = "Rhino",
+					  _server   = "irc.chatspike.net",
+					  _socket   = "StandardSocket",
+					  _password = null;
 	
-	public Config (HashMap<String, String> config)
+	protected int     _port     = 6667;
+	protected Config  _config;
+	protected Manager _manager  = new Manager();
+	
+	protected SocketDriver _connection;
+	
+	public Core (Config config)
 	{
 		_config = config;
-	}
-
-	public String put (String name, String value)
-	{
-		return _config.put(name, value);
+		
+		// Check if the config wants an autostart
+		if (true)
+		{
+			connect();
+		}
 	}
 	
-	public String get (String name)
+	public void connect ()
 	{
-		return _config.get(name);
+		_manager.purge();
+
+		
 	}
 }
