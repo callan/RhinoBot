@@ -34,7 +34,7 @@ package org.geartech.rhinobot.legacy;
 
 import java.util.ArrayList;
 
-import org.geartech.rhinobot.RhinoBot;
+import org.geartech.rhinobot.Core;
 import org.geartech.rhinobot.manager.Mode;
 
 
@@ -47,13 +47,13 @@ public interface IrcModule
 	 * When the bot connects
 	 * @param bot
 	 */
-	void onConnect (final RhinoBot bot);
+	void onConnect (final Core bot);
 
 	/**
 	 * When the bot disconnects
 	 * @param bot
 	 */
-	void onDisconnect (final RhinoBot bot);
+	void onDisconnect (final Core bot);
 
 	/**
 	 * QUIT
@@ -63,7 +63,7 @@ public interface IrcModule
 	 * @param hostmask
 	 * @param bot
 	 */
-	void onQuit (final String reason, final String nick, final String ident, final String hostmask, final RhinoBot bot);
+	void onQuit (final String reason, final String nick, final String ident, final String hostmask, final Core bot);
 
 	/**
 	 * JOIN
@@ -73,7 +73,7 @@ public interface IrcModule
 	 * @param hostmask
 	 * @param bot
 	 */
-	void onJoin (final String channel, final String nick, final String ident, final String hostmask, final RhinoBot bot);
+	void onJoin (final String channel, final String nick, final String ident, final String hostmask, final Core bot);
 
 	/**
 	 * PART
@@ -85,7 +85,7 @@ public interface IrcModule
 	 * @param bot
 	 */
 	void onPart (final String channel, final String reason, final String nick, final String ident, final String hostmask,
-			final RhinoBot bot);
+			final Core bot);
 
 	/**
 	 * KICK
@@ -98,7 +98,7 @@ public interface IrcModule
 	 * @param bot
 	 */
 	void onKick (final String channel, final String kicked, final String reason, final String nick, final String ident,
-			final String hostmask, final RhinoBot bot);
+			final String hostmask, final Core bot);
 	
 	/**
 	 * MODE
@@ -110,7 +110,7 @@ public interface IrcModule
 	 * @param bot
 	 */
 	void onMode (final String channel, final ArrayList<Mode> modes, final String nick, final String ident, final String hostmask,
-			final RhinoBot bot);
+			final Core bot);
 
 	/**
 	 * INVITE
@@ -120,7 +120,7 @@ public interface IrcModule
 	 * @param hostmask
 	 * @param bot
 	 */
-	void onInvite (final String channel, final String nick, final String ident, final String hostmask, final RhinoBot bot);
+	void onInvite (final String channel, final String nick, final String ident, final String hostmask, final Core bot);
 	
 	/**
 	 * NICK
@@ -130,7 +130,7 @@ public interface IrcModule
 	 * @param hostmask
 	 * @param bot
 	 */
-	void onNick (final String newNick, final String nick, final String ident, final String hostmask, final RhinoBot bot);
+	void onNick (final String newNick, final String nick, final String ident, final String hostmask, final Core bot);
 	
 	/**
 	 * PRIVMSG
@@ -142,7 +142,7 @@ public interface IrcModule
 	 * @param bot
 	 */
 	void onMessage (final String message, final String channel, final String nick, final String ident, final String hostmask,
-			final RhinoBot bot);
+			final Core bot);
 
 	/**
 	 * An emote, usually called action
@@ -154,7 +154,7 @@ public interface IrcModule
 	 * @param bot
 	 */
 	void onAction (final String action, final String channel, final String nick, final String ident, final String hostmask,
-			final RhinoBot bot);
+			final Core bot);
 
 	/**
 	 * NOTICE
@@ -166,7 +166,7 @@ public interface IrcModule
 	 * @param bot
 	 */
 	void onNotice (final String message, final String channel, final String nick, final String ident, final String hostmask,
-			final RhinoBot bot);
+			final Core bot);
 	
 	/**
 	 * WALLOPS
@@ -176,7 +176,7 @@ public interface IrcModule
 	 * @param hostmask
 	 * @param bot
 	 */
-	void onWallops (final String message, final String nick, final String ident, final String hostmask, final RhinoBot bot);
+	void onWallops (final String message, final String nick, final String ident, final String hostmask, final Core bot);
 
 	/**
 	 * CTCP Command.
@@ -188,7 +188,7 @@ public interface IrcModule
 	 * @param bot
 	 */
 	void onCTCP (final String command, final String extra, final String audience, final String nick, final String ident,
-			final String hostmask, final RhinoBot bot);
+			final String hostmask, final Core bot);
 	
 	/**
 	 * A CTCP version message
@@ -197,5 +197,5 @@ public interface IrcModule
 	 * @param hostmask
 	 * @param bot
 	 */
-	void onVersion (final String nick, final String ident, final String hostmask, final RhinoBot bot);
+	void onVersion (final String nick, final String ident, final String hostmask, final Core bot);
 }

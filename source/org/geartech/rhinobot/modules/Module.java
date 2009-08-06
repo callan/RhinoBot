@@ -34,7 +34,7 @@ package org.geartech.rhinobot.modules;
 
 import java.util.ArrayList;
 
-import org.geartech.rhinobot.RhinoBot;
+import org.geartech.rhinobot.Core;
 import org.geartech.rhinobot.manager.Channel;
 import org.geartech.rhinobot.manager.Mode;
 import org.geartech.rhinobot.manager.User;
@@ -44,7 +44,7 @@ import org.geartech.rhinobot.manager.User;
  */
 public interface Module
 {
-	void onInit (RhinoBot bot);
+	void onInit (Core bot);
 	
 	void onConnect (String network, String server, int port, String driver);
 	void onPostConnect ();

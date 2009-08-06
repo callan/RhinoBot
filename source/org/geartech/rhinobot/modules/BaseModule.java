@@ -34,7 +34,7 @@ package org.geartech.rhinobot.modules;
 
 import java.util.ArrayList;
 
-import org.geartech.rhinobot.RhinoBot;
+import org.geartech.rhinobot.Core;
 import org.geartech.rhinobot.manager.Channel;
 import org.geartech.rhinobot.manager.Mode;
 import org.geartech.rhinobot.manager.User;
@@ -44,9 +44,9 @@ import org.geartech.rhinobot.manager.User;
  */
 public class BaseModule implements Module
 {
-	protected RhinoBot bot;
+	protected Core bot;
 	
-	public void onInit (RhinoBot bot)
+	public void onInit (Core bot)
 	{
 		this.bot = bot;
 	}
