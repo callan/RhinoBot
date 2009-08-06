@@ -32,20 +32,72 @@
  */
 package org.geartech.rhinobot;
 
+import java.util.HashMap;
+
 /**
  * 
  */
-public class Bootstrap
+class Bootstrap
 {
+	private HashMap<String, String> _arguments = new HashMap<String, String>();
 	
 	/**
 	 * @param args
 	 */
 	public static void main (String[] args)
 	{
-		System.out.println("Stay Tuned");
-//		RhinoBot bot = new RhinoBot();
-//		bot.start();
+		new Bootstrap(args);
 	}
 	
+	Bootstrap (String[] args)
+	{
+		parseArguments(args);
+
+		String configName = "config.json";
+		
+		if (getArgument("--config") != null)
+			configName = getArgument("--config");
+		
+		try
+		{
+			CoreFactory.useConfig(configName);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	}
+	
+	private String getArgument (String arg)
+	{
+		return _arguments.get(arg);
+	}
+	
+	private void parseArguments (String[] args)
+	{
+		for (int i = 0; i != args.length; i++)
+		{
+			if (!isValid(args[i]))
+				continue;
+			
+			if (hasNext(args[i]) && ((i + 1) < args.length))
+				_arguments.put(args[i], args[i + 1]);
+			else
+				_arguments.put(args[i], "true");
+		}
+	}
+	
+	private boolean isValid (String argument)
+	{
+		return argument.equals("--debug")  ||
+			   argument.equals("--help")   ||
+			   argument.equals("-v")	   ||
+			   argument.equals("--config");
+	}
+	
+	private boolean hasNext (String argument)
+	{
+		return argument.equals("--config");
+	}
 }
